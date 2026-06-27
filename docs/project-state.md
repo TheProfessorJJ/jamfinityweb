@@ -2,11 +2,11 @@
 
 > Living status document. Read this first to know where things stand. The Lead Engineer updates it as work progresses. Dates are absolute.
 
-_Last updated: 2026-06-28 — Milestone 0-G (deploy workflow) complete; Phase 0 core CI/CD is live._
+_Last updated: 2026-06-28 — Phase 0 architectural audit complete. See `docs/phase-0-review.md`._
 
 ## Current Phase
 
-**Phase 0 — Foundations.** Milestones 0-A through 0-G complete. All CI/CD infrastructure is in place. Remaining Phase 0 work: real Economics lesson with KaTeX math, `@astrojs/sitemap`, and final Lighthouse/a11y validation before Phase 0 sign-off.
+**Phase 0 — Foundations.** Milestones 0-A through 0-G complete and audited. Three items must be resolved before Phase 1 begins — see "Pre-Phase-1 Blockers" below. Remaining Phase 0 DoD items (KaTeX, sitemap, preact, real lesson, live deploy) may fold into Phase 1 sprint 1 or a wrap-up milestone.
 
 ## Completed
 
@@ -25,19 +25,29 @@ _Last updated: 2026-06-28 — Milestone 0-G (deploy workflow) complete; Phase 0 
   - **Note:** `@astrojs/mdx@7.0.0` (Astro 7 era) installed first and failed — downgraded to `5.0.6`. When upgrading Astro, upgrade MDX integration in lockstep.
   - **Note:** `lesson.slug` (not `lesson.id`) used for URL params — `id` includes the `.mdx` extension in Astro 5 legacy collections; `slug` is clean.
 - ✅ **Milestone 0-G** — `deploy.yml` GitHub Actions workflow: install → build → Pagefind index → upload artifact → deploy to GitHub Pages via official Pages Actions (`configure-pages@v5`, `upload-pages-artifact@v3`, `deploy-pages@v4`). Triggers on push to `main` only. Concurrency group `pages` cancels in-progress runs on new push. Build: 0 errors, 0 warnings, 0 hints (15 files). Key files: `.github/workflows/deploy.yml`.
+- ✅ **Phase 0 architectural audit** — Full inspection of all 18 source files + CI workflows against architecture docs. No critical issues. Three recommended items identified (R1–R3). Full findings in `docs/phase-0-review.md`.
 
-## Remaining Phase 0 Work
+## Pre-Phase-1 Blockers
 
-Before Phase 0 sign-off (per `implementation-guide.md` DoD):
+These three items must be resolved before Phase 1 work begins. See `docs/phase-0-review.md` for full rationale.
+
+- [ ] **R1** — Add production content filter in `src/pages/[...slug].astro` (draft lessons are currently publicly accessible)
+- [ ] **R2** — Architect confirms `accentHue` schema type and track `level` enum vocabulary (open schema decisions)
+- [ ] **R3** — Add TypeScript path alias `@/*` → `src/*` in `tsconfig.json` (fragile relative imports in MDX)
+
+## Remaining Phase 0 DoD Items (defer to Phase 1 sprint 1 or wrap-up milestone)
+
 - [ ] `remark-math` + `rehype-katex` + KaTeX CSS (math rendering)
 - [ ] `@astrojs/sitemap` (sitemap.xml)
+- [ ] `@astrojs/preact` (required for interactive islands)
 - [ ] One real Economics lesson as MDX (heading hierarchy, Definition, Callout, KaTeX math, Summary)
-- [ ] GitHub Pages Pages source configured to use Actions (repo settings, one-time)
-- [ ] Lighthouse / a11y budget verification on the lesson page
+- [ ] GitHub Pages source configured to "GitHub Actions" (repo Settings → Pages, one-time UI action)
+- [ ] Lighthouse / a11y budget verification on live lesson page
 
 ## Next Session Starting Point
 
-Read: `project-state.md` → `decisions/ADR-001-initial-architecture.md` → `implementation-guide.md` (Phase 0 DoD checklist).
+Read: `project-state.md` → `docs/phase-0-review.md` → `decisions/ADR-001-initial-architecture.md`.
+Resolve R1 and R3 immediately (no Architect needed). Await Architect response on R2.
 
 ## Locked Decisions
 
