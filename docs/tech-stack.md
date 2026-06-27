@@ -48,6 +48,20 @@
 ### Math: KaTeX at build time
 Economics/Math/Econometrics demand heavy equation rendering. KaTeX pre-rendered at build avoids shipping a runtime math engine and keeps pages instant.
 
+## Concrete Toolchain (for implementation — removes ambiguity)
+
+- **Node.js:** 20 LTS (or 22 LTS). Pin via `.nvmrc` and the CI `setup-node` step.
+- **Package manager:** pnpm (v9+). `pnpm-lock.yaml` committed.
+- **Astro:** latest 5.x. **Tailwind:** latest 4.x (CSS-first `@theme`, via `@tailwindcss/vite`).
+- **Astro integrations (initial):** `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/preact`. Add `@astrojs/svelte` **only when the first data-heavy visualization island is built** — not at scaffold time.
+- **Markdown/MDX plugins:** `remark-math` + `rehype-katex` (build-time math). KaTeX CSS loaded once globally.
+- **Search:** `pagefind` run as a post-build step over `/dist`.
+- **OG images:** `astro-og-canvas` (or Satori-based generation) — chosen so image generation stays in-build and static.
+- **Lint/format:** ESLint + Prettier + `markdownlint`; Astro + TypeScript plugins.
+
+### Island framework rule
+Start with **Preact only**. Introduce **Svelte** the first time a compiled, reactive visualization (e.g. `Plot`, `GraphExplorer`) is genuinely needed. Do not add both up front. Reach for vanilla TS when no framework is required.
+
 ## Version Policy
 
 - Pin major versions; update deliberately, not automatically.

@@ -4,9 +4,12 @@
 
 ## Top Level
 
+> The Git repository root is **`jamfinityweb/`** (this is the published GitHub Pages repo). All paths below are relative to that root.
+
 ```
-jamfinity/
+jamfinityweb/                 # Git repository root
 ├── docs/                     # Project documentation — single source of truth
+│   └── decisions/            # Architecture Decision Records (ADRs)
 ├── content-source/           # Raw uploads (PDFs, slides, notes). Never published.
 │   └── <subject>/<track>/    # Mirrors content taxonomy for traceability
 ├── public/                   # Static assets copied verbatim (favicons, fonts, robots.txt, CNAME)
@@ -34,12 +37,14 @@ jamfinity/
 │   └── data/                 # Derived/config data (nav config, redirects)
 ├── .github/
 │   └── workflows/            # CI/CD: build, deploy, content-validate, pipeline triggers
-├── astro.config.mjs
-├── tailwind.config.ts        # (or Tailwind v4 CSS config)
+├── astro.config.mjs          # Astro config: site, base, integrations, markdown plugins
 ├── tsconfig.json
 ├── package.json
+├── pnpm-lock.yaml
 └── README.md
 ```
+
+> **Tailwind v4 note:** Tailwind v4 is CSS-first. Theme/tokens are declared with `@theme` inside `src/styles/`, not a JS config. A `tailwind.config.ts` is optional and only added if a plugin requires it. The token source of truth remains `src/styles/tokens.css` (see `design-system.md`).
 
 ## Naming Conventions
 

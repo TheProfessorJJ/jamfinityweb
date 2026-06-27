@@ -39,10 +39,19 @@ Protect `main`: require passing checks (validate + build) before merge.
 
 ## GitHub Pages Configuration
 
+- Repository: **`jamfinityweb`**. Without a custom domain, the project site publishes at `https://<github-user>.github.io/jamfinityweb/`.
 - Deploy via the official **GitHub Pages Actions** flow (not the legacy `gh-pages` branch).
-- **Custom domain** (`jamfinity.com`) set via `public/CNAME` + DNS. Recommended from launch to avoid base-path issues and lock in SEO.
 - HTTPS enforced (Pages-provided certificate).
-- `astro.config.mjs` `site` set to the canonical URL; `base` only if using a project subpath (avoided once custom domain is live).
+
+### Base-path & domain decision (LOCKED — resolves the prior open question)
+
+To avoid GitHub Pages' `base`-path pitfalls and the conflict between "launch with custom domain" and "domain is open," the decision is:
+
+- `astro.config.mjs` reads **`site`** and **`base`** from environment variables with safe defaults, so switching domains is config-only and requires **zero code rework**:
+  - **Default (no custom domain yet):** `site = https://<user>.github.io`, `base = /jamfinityweb`.
+  - **Custom domain live:** `site = https://jamfinity.com`, `base = /` — add `public/CNAME` + DNS.
+- **All internal links must be base-aware** — use Astro's URL helpers / `import.meta.env.BASE_URL`, never hardcode leading-slash paths. This is the single rule that makes the domain switch painless.
+- Purchasing `jamfinity.com` is an **operational** task, not an architectural blocker. The site is fully functional on the project URL until then.
 
 ## Caching & Reproducibility
 
