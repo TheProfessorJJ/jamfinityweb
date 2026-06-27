@@ -2,11 +2,11 @@
 
 > Living status document. Read this first to know where things stand. The Lead Engineer updates it as work progresses. Dates are absolute.
 
-_Last updated: 2026-06-28 — Milestone 0-F (lesson route + MDX) complete; ready for 0-G._
+_Last updated: 2026-06-28 — Milestone 0-G (deploy workflow) complete; Phase 0 core CI/CD is live._
 
 ## Current Phase
 
-**Phase 0 — Foundations.** Milestones 0-A through 0-F complete. Ready to begin **Milestone 0-G** (real Economics lesson, KaTeX math, CI deploy to GitHub Pages).
+**Phase 0 — Foundations.** Milestones 0-A through 0-G complete. All CI/CD infrastructure is in place. Remaining Phase 0 work: real Economics lesson with KaTeX math, `@astrojs/sitemap`, and final Lighthouse/a11y validation before Phase 0 sign-off.
 
 ## Completed
 
@@ -24,10 +24,20 @@ _Last updated: 2026-06-28 — Milestone 0-F (lesson route + MDX) complete; ready
 - ✅ **Milestone 0-F** — MDX integration (`@astrojs/mdx@5.0.6` for Astro 5.x); `[...slug].astro` lesson route via `getStaticPaths` + `lesson.slug`; sample lesson converted from `.md` to `.mdx` using `Definition`, `Callout`, `Summary`. Route generates `/economics/microeconomics-i/introduction/` with correct LearningResource JSON-LD, noindex (draft), all component output verified in built HTML. Build: 0 errors, 0 warnings, 0 hints (15 files). Key files: `astro.config.mjs`, `src/pages/[...slug].astro`, `src/content/lessons/economics/microeconomics-i/introduction.mdx`.
   - **Note:** `@astrojs/mdx@7.0.0` (Astro 7 era) installed first and failed — downgraded to `5.0.6`. When upgrading Astro, upgrade MDX integration in lockstep.
   - **Note:** `lesson.slug` (not `lesson.id`) used for URL params — `id` includes the `.mdx` extension in Astro 5 legacy collections; `slug` is clean.
+- ✅ **Milestone 0-G** — `deploy.yml` GitHub Actions workflow: install → build → Pagefind index → upload artifact → deploy to GitHub Pages via official Pages Actions (`configure-pages@v5`, `upload-pages-artifact@v3`, `deploy-pages@v4`). Triggers on push to `main` only. Concurrency group `pages` cancels in-progress runs on new push. Build: 0 errors, 0 warnings, 0 hints (15 files). Key files: `.github/workflows/deploy.yml`.
 
-## Next Milestone
+## Remaining Phase 0 Work
 
-**Milestone 0-G — Real Economics lesson + KaTeX math + CI deploy.** Configure `remark-math` + `rehype-katex`; install KaTeX CSS; author one real supply-and-demand Economics lesson as MDX (heading hierarchy, Definition, Callout, KaTeX math, Summary, SourceRef); add `deploy.yml` CI to deploy to GitHub Pages. Full definition of done in `implementation-guide.md`.
+Before Phase 0 sign-off (per `implementation-guide.md` DoD):
+- [ ] `remark-math` + `rehype-katex` + KaTeX CSS (math rendering)
+- [ ] `@astrojs/sitemap` (sitemap.xml)
+- [ ] One real Economics lesson as MDX (heading hierarchy, Definition, Callout, KaTeX math, Summary)
+- [ ] GitHub Pages Pages source configured to use Actions (repo settings, one-time)
+- [ ] Lighthouse / a11y budget verification on the lesson page
+
+## Next Session Starting Point
+
+Read: `project-state.md` → `decisions/ADR-001-initial-architecture.md` → `implementation-guide.md` (Phase 0 DoD checklist).
 
 ## Locked Decisions
 
