@@ -1,0 +1,86 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Prose from './Prose.astro';
+
+interface Props {
+  lesson: CollectionEntry<'lessons'>;
+}
+
+const { lesson } = Astro.props;
+const { title, summary, estMinutes, difficulty, status } = lesson.data;
+
+// LearningResource JSON-LD — consumed by search engines and LMS integrations.
+const jsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: title,
+  description: summary,
+  educationalLevel: difficulty,
+  timeRequired: `PT${estMinutes}M`,
+  url: Astro.url.href,
+  provider: {
+    '@type': 'Organization',
+    name: 'Jamfinity',
+    url: Astro.site?.toString() ?? '',
+  },
+};
+
+// Draft and review content should not be indexed by search engines.
+const noIndex = status !== 'published';
+---
+<BaseLayout
+  {title}
+  description={summary}
+  ogType="article"
+  {jsonLd}
+  {noIndex}
+>
+  <main id="main-content">
+    <article>
+      <header class="lesson-header">
+        <h1 class="lesson-title">{title}</h1>
+        <p class="lesson-meta">
+          <span>{estMinutes} min</span>
+          <span aria-hidden="true">·</span>
+          <span>{difficulty}</span>
+        </p>
+      </header>
+
+      <Prose>
+        <slot />
+      </Prose>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    max-width: calc(var(--prose-max-width) + var(--space-12) * 2);
+    margin-inline: auto;
+    padding: var(--space-10) var(--space-6);
+  }
+
+  .lesson-header {
+    margin-block-end: var(--space-8);
+    padding-block-end: var(--space-6);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .lesson-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-tight);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .lesson-meta {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    color: var(--color-text-tertiary);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+</style>

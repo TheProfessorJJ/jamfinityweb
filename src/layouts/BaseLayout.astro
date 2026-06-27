@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import Meta from '../components/seo/Meta.astro';
+import OpenGraph from '../components/seo/OpenGraph.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  image?: string;
+  jsonLd?: Record<string, unknown>;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = 'Jamfinity — premium interactive educational content.',
+  ogType = 'website',
+  image,
+  jsonLd,
+  noIndex = false,
+} = Astro.props;
+
+// Default canonical to the current page URL (includes base path on GitHub Pages).
+const canonical = Astro.props.canonical ?? Astro.url.href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <Meta {title} {description} {canonical} {noIndex} />
+    <OpenGraph {title} {description} url={canonical} type={ogType} {image} />
+    {jsonLd && <JsonLd schema={jsonLd} />}
+
+    <!--
+      No-flash theme script.
+      Runs synchronously before paint: reads localStorage, falls back to
+      system preference, sets data-theme on <html>. Must be is:inline so
+      Astro does not defer or bundle it.
+    -->
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch { /* storage unavailable */ }
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-bg text-text-primary font-sans">
+    <slot />
+  </body>
+</html>

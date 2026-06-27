@@ -1,142 +1,117 @@
 ---
 // Phase 0-B: theme verification scaffold only.
 // This page is replaced in Phase 1.
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jamfinity — Theme Verification</title>
+<BaseLayout title="Theme Verification" noIndex={true}>
 
-    <!--
-      No-flash theme script.
-      Runs synchronously before paint: reads localStorage, falls back to
-      system preference, sets data-theme on <html> before CSS renders.
-      Must be is:inline so Astro does not defer or bundle it.
-    -->
-    <script is:inline>
-      (function () {
-        var stored = null;
-        try { stored = localStorage.getItem('theme'); } catch { /* storage unavailable */ }
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-      })();
-    </script>
-  </head>
+  <div style="max-width: 640px; margin: 0 auto; padding: 48px 24px;">
 
-  <body class="min-h-screen bg-bg text-text-primary font-sans">
+    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border);">
+      <p style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 0 0 8px;">
+        Phase 0-B / 0-D
+      </p>
+      <h1 style="font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); line-height: var(--leading-tight); margin: 0 0 8px; color: var(--color-text-primary);">
+        Jamfinity
+      </h1>
+      <p style="color: var(--color-text-secondary); margin: 0;">
+        Token system and theme verification. This page will be replaced in Phase 1.
+      </p>
+    </header>
 
-    <div style="max-width: 640px; margin: 0 auto; padding: 48px 24px;">
+    <!-- Theme toggle -->
+    <section style="margin-bottom: 40px;">
+      <button
+        id="theme-toggle"
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2);
+          background: var(--button-bg);
+          color: var(--button-text);
+          border: none;
+          border-radius: var(--button-radius);
+          padding: var(--button-padding-y) var(--button-padding-x);
+          font-size: var(--button-font-size);
+          font-weight: var(--button-font-weight);
+          font-family: inherit;
+          cursor: pointer;
+          transition: background-color var(--duration-micro) var(--ease-out);
+        "
+        aria-label="Toggle light/dark theme"
+      >
+        Toggle theme
+      </button>
+    </section>
 
-      <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border);">
-        <p style="font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 0 0 8px;">
-          Phase 0-B
-        </p>
-        <h1 style="font-size: var(--font-size-4xl); font-weight: var(--font-weight-bold); line-height: var(--leading-tight); margin: 0 0 8px; color: var(--color-text-primary);">
-          Jamfinity
-        </h1>
-        <p style="color: var(--color-text-secondary); margin: 0;">
-          Token system and theme verification. This page will be replaced in Phase 1.
-        </p>
-      </header>
+    <!-- Token verification swatches -->
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); margin: 0 0 16px;">
+        Semantic color tokens
+      </h2>
 
-      <!-- Theme toggle -->
-      <section style="margin-bottom: 40px;">
-        <button
-          id="theme-toggle"
-          style="
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-2);
-            background: var(--button-bg);
-            color: var(--button-text);
-            border: none;
-            border-radius: var(--button-radius);
-            padding: var(--button-padding-y) var(--button-padding-x);
-            font-size: var(--button-font-size);
-            font-weight: var(--button-font-weight);
-            font-family: inherit;
-            cursor: pointer;
-            transition: background-color var(--duration-micro) var(--ease-out);
-          "
-          aria-label="Toggle light/dark theme"
-        >
-          Toggle theme
-        </button>
-      </section>
-
-      <!-- Token verification swatches -->
-      <section style="margin-bottom: 40px;">
-        <h2 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); margin: 0 0 16px;">
-          Semantic color tokens
-        </h2>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3);">
-          {[
-            { name: 'bg',             label: 'Background' },
-            { name: 'bg-subtle',      label: 'Background subtle' },
-            { name: 'surface',        label: 'Surface' },
-            { name: 'surface-subtle', label: 'Surface subtle' },
-            { name: 'surface-raised', label: 'Surface raised' },
-            { name: 'accent',         label: 'Accent' },
-            { name: 'accent-subtle',  label: 'Accent subtle' },
-            { name: 'border',         label: 'Border' },
-            { name: 'success',        label: 'Success' },
-            { name: 'warning',        label: 'Warning' },
-            { name: 'danger',         label: 'Danger' },
-            { name: 'info',           label: 'Info' },
-          ].map(({ name, label }) => (
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3);">
+        {[
+          { name: 'bg',             label: 'Background' },
+          { name: 'bg-subtle',      label: 'Background subtle' },
+          { name: 'surface',        label: 'Surface' },
+          { name: 'surface-subtle', label: 'Surface subtle' },
+          { name: 'surface-raised', label: 'Surface raised' },
+          { name: 'accent',         label: 'Accent' },
+          { name: 'accent-subtle',  label: 'Accent subtle' },
+          { name: 'border',         label: 'Border' },
+          { name: 'success',        label: 'Success' },
+          { name: 'warning',        label: 'Warning' },
+          { name: 'danger',         label: 'Danger' },
+          { name: 'info',           label: 'Info' },
+        ].map(({ name, label }) => (
+          <div
+            style={`
+              border-radius: var(--radius-md);
+              border: 1px solid var(--color-border);
+              overflow: hidden;
+            `}
+          >
             <div
               style={`
-                border-radius: var(--radius-md);
-                border: 1px solid var(--color-border);
-                overflow: hidden;
+                height: 40px;
+                background-color: var(--color-${name});
               `}
-            >
-              <div
-                style={`
-                  height: 40px;
-                  background-color: var(--color-${name});
-                `}
-              />
-              <div style="padding: var(--space-1-5) var(--space-2); background: var(--color-surface);">
-                <span style="font-size: var(--font-size-xs); color: var(--color-text-secondary); font-family: var(--font-mono);">
-                  {label}
-                </span>
-              </div>
+            />
+            <div style="padding: var(--space-1-5) var(--space-2); background: var(--color-surface);">
+              <span style="font-size: var(--font-size-xs); color: var(--color-text-secondary); font-family: var(--font-mono);">
+                {label}
+              </span>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        ))}
+      </div>
+    </section>
 
-      <!-- Text hierarchy -->
-      <section style="margin-bottom: 40px;">
-        <h2 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); margin: 0 0 16px;">
-          Text tokens
-        </h2>
-        <p style="color: var(--color-text-primary); margin: 0 0 8px;">Primary text — readable body copy, headings.</p>
-        <p style="color: var(--color-text-secondary); margin: 0 0 8px;">Secondary text — supporting information, labels.</p>
-        <p style="color: var(--color-text-tertiary); margin: 0 0 8px;">Tertiary text — placeholders, metadata.</p>
-        <p style="color: var(--color-text-disabled); margin: 0 0 8px;">Disabled text — unavailable states.</p>
-        <p style="margin: 0 0 8px;"><a href="#">Accent link</a> — uses --color-accent-text.</p>
-        <code style="font-family: var(--font-mono); font-size: var(--font-size-sm); color: var(--color-text-secondary);">--font-mono code sample</code>
-      </section>
+    <!-- Text hierarchy -->
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); margin: 0 0 16px;">
+        Text tokens
+      </h2>
+      <p style="color: var(--color-text-primary); margin: 0 0 8px;">Primary text — readable body copy, headings.</p>
+      <p style="color: var(--color-text-secondary); margin: 0 0 8px;">Secondary text — supporting information, labels.</p>
+      <p style="color: var(--color-text-tertiary); margin: 0 0 8px;">Tertiary text — placeholders, metadata.</p>
+      <p style="color: var(--color-text-disabled); margin: 0 0 8px;">Disabled text — unavailable states.</p>
+      <p style="margin: 0 0 8px;"><a href="#">Accent link</a> — uses --color-accent-text.</p>
+      <code style="font-family: var(--font-mono); font-size: var(--font-size-sm); color: var(--color-text-secondary);">--font-mono code sample</code>
+    </section>
 
-    </div>
+  </div>
 
-    <!-- Theme toggle script -->
-    <script is:inline>
-      document.getElementById('theme-toggle').addEventListener('click', function () {
-        var current = document.documentElement.getAttribute('data-theme');
-        var next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
-      });
-    </script>
+  <!-- Theme toggle script -->
+  <script is:inline>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch { /* storage unavailable */ }
+    });
+  </script>
 
-  </body>
-</html>
+</BaseLayout>
