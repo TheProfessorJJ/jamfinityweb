@@ -1,0 +1,60 @@
+---
+type CalloutType = 'note' | 'tip' | 'warning' | 'important';
+
+interface Props {
+  type?: CalloutType;
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const defaultTitles: Record<CalloutType, string> = {
+  note:      'Note',
+  tip:       'Tip',
+  warning:   'Warning',
+  important: 'Important',
+};
+
+const label = title ?? defaultTitles[type];
+---
+<div class="callout" data-type={type} role="note">
+  <p class="callout-label" aria-hidden="true">{label}</p>
+  <div class="callout-body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Per-type color token — set once, referenced throughout. */
+  .callout[data-type='note']      { --callout-color: var(--color-info); }
+  .callout[data-type='tip']       { --callout-color: var(--color-success); }
+  .callout[data-type='warning']   { --callout-color: var(--color-warning); }
+  .callout[data-type='important'] { --callout-color: var(--color-danger); }
+
+  .callout {
+    border-inline-start: 3px solid var(--callout-color);
+    background: var(--color-surface-subtle);
+    border-radius: 0 var(--callout-radius) var(--callout-radius) 0;
+    padding: var(--callout-padding);
+    margin-block: var(--space-6);
+  }
+
+  .callout-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--callout-color);
+    margin: 0 0 var(--space-2);
+  }
+
+  .callout-body {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  .callout-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

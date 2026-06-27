@@ -1,0 +1,55 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'Summary' } = Astro.props;
+---
+<section class="summary" aria-label={title}>
+  <h2 class="summary-title">{title}</h2>
+  <div class="summary-body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .summary {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-block: var(--space-8);
+  }
+
+  .summary-title {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 0 0 var(--space-4);
+  }
+
+  .summary-body {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  .summary-body :global(p:last-child),
+  .summary-body :global(ul:last-child),
+  .summary-body :global(ol:last-child) {
+    margin-bottom: 0;
+  }
+
+  /* Tighten list spacing inside the summary box. */
+  .summary-body :global(ul),
+  .summary-body :global(ol) {
+    padding-inline-start: var(--space-5);
+    margin: 0 0 var(--space-3);
+  }
+
+  .summary-body :global(li) {
+    margin-block-start: var(--space-1-5);
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+interface Props {
+  term: string;
+  // Optional anchor id. Defaults to a slug of the term.
+  // When concept pages exist, link href will resolve to /concepts/<id>.
+  id?: string;
+}
+
+const { term, id } = Astro.props;
+
+// Stable, URL-safe id derived from the term.
+const slug = id ?? term.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+const headingId = `def-${slug}`;
+---
+<div class="definition" role="note" aria-labelledby={headingId}>
+  <p class="definition-label" aria-hidden="true">Definition</p>
+  <p class="definition-term" id={headingId}>
+    <dfn>{term}</dfn>
+  </p>
+  <div class="definition-body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .definition {
+    border-inline-start: 3px solid var(--color-accent);
+    background: var(--color-accent-subtle);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--callout-padding);
+    margin-block: var(--space-6);
+  }
+
+  .definition-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+    margin: 0 0 var(--space-1);
+  }
+
+  .definition-term {
+    margin: 0 0 var(--space-2);
+  }
+
+  .definition-term dfn {
+    font-style: normal;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+  }
+
+  .definition-body {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Suppress default margins on the last child so padding stays consistent. */
+  .definition-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
