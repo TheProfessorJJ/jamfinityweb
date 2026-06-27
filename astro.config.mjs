@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
 // site and base are driven by environment variables so switching from
 // the GitHub Pages project URL to a custom domain requires zero code changes.
@@ -9,4 +10,7 @@ const base = process.env.BASE ?? '/jamfinityweb';
 export default defineConfig({
   site,
   base,
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

@@ -1,0 +1,135 @@
+/* =============================================================
+   GLOBAL STYLES — Entry point for all CSS.
+   Import order matters: Tailwind → tokens → theme mapping → base.
+   ============================================================= */
+
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* =============================================================
+   TAILWIND v4 THEME MAPPING
+   @theme inline: Tailwind reads our CSS vars and generates
+   utilities without emitting duplicate :root declarations.
+   Naming: --color-X → utilities bg-X, text-X, border-X, etc.
+   ============================================================= */
+
+@theme inline {
+  /* Backgrounds */
+  --color-bg:             var(--color-bg);
+  --color-bg-subtle:      var(--color-bg-subtle);
+
+  /* Surfaces */
+  --color-surface:        var(--color-surface);
+  --color-surface-subtle: var(--color-surface-subtle);
+  --color-surface-raised: var(--color-surface-raised);
+
+  /* Text */
+  --color-text-primary:   var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary:  var(--color-text-tertiary);
+  --color-text-disabled:  var(--color-text-disabled);
+  --color-text-inverse:   var(--color-text-inverse);
+  --color-text-on-accent: var(--color-text-on-accent);
+
+  /* Borders */
+  --color-border:         var(--color-border);
+  --color-border-strong:  var(--color-border-strong);
+  --color-border-subtle:  var(--color-border-subtle);
+
+  /* Accent */
+  --color-accent:         var(--color-accent);
+  --color-accent-hover:   var(--color-accent-hover);
+  --color-accent-subtle:  var(--color-accent-subtle);
+  --color-accent-text:    var(--color-accent-text);
+
+  /* Status */
+  --color-success:        var(--color-success);
+  --color-warning:        var(--color-warning);
+  --color-danger:         var(--color-danger);
+  --color-info:           var(--color-info);
+
+  /* Typography */
+  --font-family-sans:  var(--font-sans);
+  --font-family-serif: var(--font-serif);
+  --font-family-mono:  var(--font-mono);
+}
+
+/* =============================================================
+   BASE — Global resets and document defaults.
+   ============================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--leading-relaxed);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Visible focus ring using the token */
+:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Baseline link style */
+a {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--duration-micro) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Images */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Smooth theme transitions (excluded from reduced-motion) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    transition:
+      background-color var(--duration-standard) var(--ease-out),
+      color var(--duration-standard) var(--ease-out);
+  }
+}
+
+/* Disable all motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,290 @@
+/* =============================================================
+   JAMFINITY DESIGN TOKENS
+   Three-layer system: primitive → semantic → component.
+   Source of truth for all visual values.
+   Components reference semantic or component tokens only —
+   never primitives directly, never hardcoded values.
+   ============================================================= */
+
+/* =============================================================
+   LAYER 1 — PRIMITIVES
+   Raw named values. Not used in components.
+   ============================================================= */
+
+:root {
+  /* Gray scale — refined warm-neutral */
+  --primitive-gray-0:   #ffffff;
+  --primitive-gray-50:  #f8f9fa;
+  --primitive-gray-100: #f1f3f5;
+  --primitive-gray-150: #e9ecef;
+  --primitive-gray-200: #dee2e6;
+  --primitive-gray-300: #ced4da;
+  --primitive-gray-400: #adb5bd;
+  --primitive-gray-500: #6c757d;
+  --primitive-gray-600: #495057;
+  --primitive-gray-700: #343a40;
+  --primitive-gray-800: #212529;
+  --primitive-gray-850: #1a1d20;
+  --primitive-gray-900: #141618;
+  --primitive-gray-950: #0c0d0f;
+
+  /* Accent — Blue (brand; restrained use only) */
+  --primitive-accent-100: #dbeafe;
+  --primitive-accent-200: #bfdbfe;
+  --primitive-accent-300: #93c5fd;
+  --primitive-accent-400: #60a5fa;
+  --primitive-accent-500: #3b82f6;
+  --primitive-accent-600: #2563eb;
+  --primitive-accent-700: #1d4ed8;
+  --primitive-accent-800: #1e40af;
+  --primitive-accent-900: #1e3a8a;
+
+  /* Status — muted, not loud */
+  --primitive-green-400:  #4ade80;
+  --primitive-green-600:  #16a34a;
+  --primitive-amber-400:  #fbbf24;
+  --primitive-amber-600:  #d97706;
+  --primitive-red-400:    #f87171;
+  --primitive-red-600:    #dc2626;
+  --primitive-sky-400:    #38bdf8;
+  --primitive-sky-600:    #0284c7;
+
+  /* Spacing — 4px base scale */
+  --space-px:  1px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-2-5: 10px;
+  --space-3:   12px;
+  --space-3-5: 14px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-7:   28px;
+  --space-8:   32px;
+  --space-9:   36px;
+  --space-10:  40px;
+  --space-11:  44px;
+  --space-12:  48px;
+  --space-14:  56px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-28:  112px;
+  --space-32:  128px;
+
+  /* Border radius */
+  --radius-none: 0px;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-full: 9999px;
+
+  /* Type scale — modular ~1.2 ratio */
+  --font-size-xs:   0.75rem;
+  --font-size-sm:   0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg:   1.125rem;
+  --font-size-xl:   1.25rem;
+  --font-size-2xl:  1.5rem;
+  --font-size-3xl:  1.875rem;
+  --font-size-4xl:  2.25rem;
+  --font-size-5xl:  clamp(2rem, 4vw + 1rem, 3rem);
+  --font-size-6xl:  clamp(2.5rem, 5vw + 1rem, 3.75rem);
+
+  /* Line heights */
+  --leading-tight:   1.25;
+  --leading-snug:    1.375;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   1.75;
+
+  /* Font weights */
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* Font families — system stack; Phase 1 adds self-hosted Inter/Geist-class */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               Helvetica, Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Fira Code', Menlo, Consolas, monospace;
+
+  /* Motion */
+  --duration-micro:    150ms;
+  --duration-standard: 250ms;
+  --duration-slow:     400ms;
+  --ease-out:   cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:    cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Layout */
+  --measure:       68ch;
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1400px;
+}
+
+
+/* =============================================================
+   LAYER 2 — SEMANTIC
+   Intent-driven. What components reference.
+   Both themes are first-class; no value is an afterthought.
+   ============================================================= */
+
+/* Default to light; also applied when data-theme="light" is explicit */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Page backgrounds */
+  --color-bg:             var(--primitive-gray-0);
+  --color-bg-subtle:      var(--primitive-gray-50);
+
+  /* Surface (cards, panels, inputs) */
+  --color-surface:        var(--primitive-gray-0);
+  --color-surface-subtle: var(--primitive-gray-50);
+  --color-surface-raised: var(--primitive-gray-0);
+
+  /* Text */
+  --color-text-primary:   var(--primitive-gray-900);
+  --color-text-secondary: var(--primitive-gray-600);
+  --color-text-tertiary:  var(--primitive-gray-400);
+  --color-text-disabled:  var(--primitive-gray-300);
+  --color-text-inverse:   var(--primitive-gray-0);
+  --color-text-on-accent: var(--primitive-gray-0);
+
+  /* Borders */
+  --color-border:         var(--primitive-gray-200);
+  --color-border-strong:  var(--primitive-gray-300);
+  --color-border-subtle:  var(--primitive-gray-150);
+
+  /* Accent (use sparingly — brand/links/focus) */
+  --color-accent:         var(--primitive-accent-600);
+  --color-accent-hover:   var(--primitive-accent-700);
+  --color-accent-subtle:  var(--primitive-accent-100);
+  --color-accent-muted:   var(--primitive-accent-200);
+  --color-accent-text:    var(--primitive-accent-700);
+
+  /* Status */
+  --color-success:        var(--primitive-green-600);
+  --color-warning:        var(--primitive-amber-600);
+  --color-danger:         var(--primitive-red-600);
+  --color-info:           var(--primitive-sky-600);
+
+  /* Focus ring */
+  --color-focus-ring:     var(--primitive-accent-500);
+
+  /* Elevation */
+  --elevation-1:          var(--shadow-xs);
+  --elevation-2:          var(--shadow-sm);
+  --elevation-3:          var(--shadow-md);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Page backgrounds */
+  --color-bg:             var(--primitive-gray-950);
+  --color-bg-subtle:      var(--primitive-gray-900);
+
+  /* Surface */
+  --color-surface:        var(--primitive-gray-900);
+  --color-surface-subtle: var(--primitive-gray-850);
+  --color-surface-raised: var(--primitive-gray-800);
+
+  /* Text */
+  --color-text-primary:   var(--primitive-gray-50);
+  --color-text-secondary: var(--primitive-gray-400);
+  --color-text-tertiary:  var(--primitive-gray-500);
+  --color-text-disabled:  var(--primitive-gray-600);
+  --color-text-inverse:   var(--primitive-gray-950);
+  --color-text-on-accent: var(--primitive-gray-0);
+
+  /* Borders */
+  --color-border:         var(--primitive-gray-700);
+  --color-border-strong:  var(--primitive-gray-600);
+  --color-border-subtle:  var(--primitive-gray-800);
+
+  /* Accent */
+  --color-accent:         var(--primitive-accent-400);
+  --color-accent-hover:   var(--primitive-accent-300);
+  --color-accent-subtle:  rgb(59 130 246 / 0.15);
+  --color-accent-muted:   rgb(59 130 246 / 0.25);
+  --color-accent-text:    var(--primitive-accent-400);
+
+  /* Status */
+  --color-success:        var(--primitive-green-400);
+  --color-warning:        var(--primitive-amber-400);
+  --color-danger:         var(--primitive-red-400);
+  --color-info:           var(--primitive-sky-400);
+
+  /* Focus ring */
+  --color-focus-ring:     var(--primitive-accent-400);
+
+  /* Elevation — stronger in dark mode */
+  --elevation-1:          0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --elevation-2:          0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --elevation-3:          0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+}
+
+
+/* =============================================================
+   LAYER 3 — COMPONENT
+   Scoped defaults. Reference semantic tokens only.
+   Override per-component by redefining the var locally.
+   ============================================================= */
+
+:root {
+  /* Button */
+  --button-bg:          var(--color-accent);
+  --button-bg-hover:    var(--color-accent-hover);
+  --button-text:        var(--color-text-on-accent);
+  --button-radius:      var(--radius-md);
+  --button-padding-x:   var(--space-4);
+  --button-padding-y:   var(--space-2);
+  --button-font-size:   var(--font-size-sm);
+  --button-font-weight: var(--font-weight-medium);
+
+  /* Card */
+  --card-bg:            var(--color-surface);
+  --card-border:        var(--color-border);
+  --card-radius:        var(--radius-lg);
+  --card-shadow:        var(--elevation-1);
+  --card-padding:       var(--space-6);
+
+  /* Input */
+  --input-bg:           var(--color-surface);
+  --input-border:       var(--color-border);
+  --input-text:         var(--color-text-primary);
+  --input-placeholder:  var(--color-text-tertiary);
+  --input-radius:       var(--radius-md);
+
+  /* Nav */
+  --nav-bg:             var(--color-bg);
+  --nav-border:         var(--color-border);
+  --nav-height:         var(--space-14);
+
+  /* Callout */
+  --callout-radius:     var(--radius-md);
+  --callout-padding:    var(--space-4);
+
+  /* Prose */
+  --prose-max-width:    var(--measure);
+  --prose-body-size:    var(--font-size-base);
+  --prose-body-leading: var(--leading-relaxed);
+  --prose-h-weight:     var(--font-weight-semibold);
+  --prose-code-size:    var(--font-size-sm);
+}
