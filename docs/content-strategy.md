@@ -28,7 +28,7 @@ subject       ref→subjects
 track         ref→tracks
 order         number   (position within track)
 summary       string   (1–2 sentences; used in cards, SEO)
-difficulty    enum     (intro | core | advanced)
+difficulty    enum     (intro | core | advanced)   — per-lesson cognitive load (see Difficulty vs Level below)
 estMinutes    number
 prerequisites ref[]→lessons
 concepts      ref[]→concepts
@@ -48,12 +48,23 @@ id, term, aliases[], definition, subject, relatedConcepts ref[], firstSeenIn ref
 ### Track
 ```
 id, title, subject ref, order, summary, level, status
+level    enum    (intro | intermediate | advanced)   — curriculum positioning (see Difficulty vs Level below)
 ```
 
 ### Subject
 ```
 id, name, description, accentHue, icon, order
+accentHue    number    (integer 0–360)    — HSL hue angle for the subject's accent; consumed as hsl(var(--subject-hue) …)
 ```
+
+### Difficulty vs Level (canonical — see ADR-002)
+
+Track `level` and lesson `difficulty` are **two distinct, orthogonal axes** and intentionally use different vocabularies. Do **not** unify them.
+
+- **Track `level`** = `intro | intermediate | advanced` — the track's *position in a learning path / curriculum* (catalog-style level).
+- **Lesson `difficulty`** = `intro | core | advanced` — a *single lesson's cognitive demand*. `core` denotes the standard/main body tier.
+
+They overlap on `intro`/`advanced` only as natural language; they are not the same dimension. An `intermediate`-level track may contain `intro`, `core`, and `advanced` lessons. Neither enum derives from the other.
 
 ### Tool / Article
 ```

@@ -71,6 +71,10 @@ WCAG 2.2 AA baseline, Lighthouse a11y target 100. Semantic HTML first, full keyb
 - **Positive:** instant pages, low operating cost, AI-authorable at scale, SEO-strong, monetization-ready, framework-portable content + tokens.
 - **Trade-offs accepted:** no cross-device sync without a future hosted auth layer; build time grows with content (mitigated by caching/incremental builds); contributors must learn the token + schema discipline.
 
+## Amendments
+
+- **ADR-002** (2026-06-28) — clarifies §5 Content Architecture: `accentHue` is a numeric HSL hue angle (integer 0–360); track `level` and lesson `difficulty` are distinct, non-unified vocabularies. Confirms existing implementation; no code change.
+
 ## Change Process
 
 Any change to a LOCKED item requires a new ADR (`ADR-00N`) that names what it supersedes, updates the affected `/docs`, and updates `project-state.md`. Until then, these decisions stand.

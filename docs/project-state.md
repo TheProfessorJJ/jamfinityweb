@@ -32,7 +32,7 @@ _Last updated: 2026-06-28 — Phase 0 architectural audit complete. See `docs/ph
 These three items must be resolved before Phase 1 work begins. See `docs/phase-0-review.md` for full rationale.
 
 - [ ] **R1** — Add production content filter in `src/pages/[...slug].astro` (draft lessons are currently publicly accessible)
-- [ ] **R2** — Architect confirms `accentHue` schema type and track `level` enum vocabulary (open schema decisions)
+- [x] **R2** — RESOLVED by Architect (2026-06-28, `decisions/ADR-002-schema-conventions.md`): `accentHue` = numeric HSL hue angle (int 0–360); track `level` and lesson `difficulty` stay distinct vocabularies. Both confirm existing implementation — **no code change**. `content-strategy.md` updated.
 - [ ] **R3** — Add TypeScript path alias `@/*` → `src/*` in `tsconfig.json` (fragile relative imports in MDX)
 
 ## Remaining Phase 0 DoD Items (defer to Phase 1 sprint 1 or wrap-up milestone)
@@ -76,12 +76,12 @@ These are **operational, not architectural** — none block Phase 0:
 - [ ] Analytics provider: Plausible vs GA4 (decide by Phase 5).
 - [ ] `content-source/` storage: in-repo vs sibling store (revisit if PDFs are large or non-public).
 
-### Open Schema Decisions (non-blocking — require Architect confirmation)
+### Open Schema Decisions — RESOLVED (ADR-002, 2026-06-28)
 
-Surfaced during Milestone 0-C review:
+Surfaced during Milestone 0-C review; decided by Architect in `decisions/ADR-002-schema-conventions.md`. Both confirm the existing implementation — no code change required.
 
-- [ ] **`accentHue` type** — `content-strategy.md` specifies `string`; `src/content/config.ts` implements `z.number().int().min(0).max(360)`. HSL hue is semantically a number (0–360 integer), so `number` is more type-safe and validation-friendly. If the Architect intended a full CSS string (e.g. `"217deg"` or `"hsl(217 80% 50%)"`) the schema must change. Confirm and update `content-strategy.md` to match whichever is canonical.
-- [ ] **Track `level` enum values** — Architecture specifies lesson `difficulty` as `intro | core | advanced` but does not enumerate track `level` values. Implementation chose `intro | intermediate | advanced`. The middle values differ (`core` vs. `intermediate`) and are not synonyms. If tracks and lessons should share a vocabulary, the track enum needs updating. Architect to confirm or specify.
+- [x] **`accentHue` type** — LOCKED as numeric HSL hue angle, `z.number().int().min(0).max(360)`. `content-strategy.md` updated; implementation already correct.
+- [x] **Track `level` vs lesson `difficulty`** — LOCKED as two distinct, non-unified axes: `level` = `intro | intermediate | advanced` (curriculum positioning); `difficulty` = `intro | core | advanced` (per-lesson cognitive load). Documented as orthogonal in `content-strategy.md`; implementation already correct.
 
 ## Risks
 
