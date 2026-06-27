@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "eslint . && markdownlint \"docs/**/*.md\"",
+    "lint": "eslint . && markdownlint --config docs/.markdownlint.json \"docs/**/*.md\" && markdownlint \"**/*.md\" --ignore \"docs/**\"",
     "type-check": "astro check"
   },
   "dependencies": {
