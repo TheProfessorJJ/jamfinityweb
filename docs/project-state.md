@@ -2,11 +2,11 @@
 
 > Living status document. Read this first to know where things stand. The Lead Engineer updates it as work progresses. Dates are absolute.
 
-_Last updated: 2026-06-28 — Milestone 0-E (content components) complete; ready for 0-F._
+_Last updated: 2026-06-28 — Milestone 0-F (lesson route + MDX) complete; ready for 0-G._
 
 ## Current Phase
 
-**Phase 0 — Foundations.** Milestones 0-A through 0-E complete. Ready to begin **Milestone 0-F** (MDX integration, one real lesson, lesson route, deploy).
+**Phase 0 — Foundations.** Milestones 0-A through 0-F complete. Ready to begin **Milestone 0-G** (real Economics lesson, KaTeX math, CI deploy to GitHub Pages).
 
 ## Completed
 
@@ -21,10 +21,13 @@ _Last updated: 2026-06-28 — Milestone 0-E (content components) complete; ready
 - ✅ **Milestone 0-C** — Six Zod content collection schemas in `src/content/config.ts`; minimum sample content to verify reference integrity. Key files: `src/content/config.ts`, `src/content/subjects/economics.yaml`, `src/content/tracks/economics/microeconomics-i.yaml`, `src/content/lessons/economics/microeconomics-i/introduction.md`, `src/content/concepts/economics/scarcity.yaml`.
 - ✅ **Milestone 0-D** — `BaseLayout`, `Prose`, `LessonLayout` (skeleton) layouts; `Meta`, `OpenGraph`, `JsonLd` SEO components; `index.astro` updated to use `BaseLayout`. Build: 0 errors, 0 warnings, 0 hints. Key files: `src/layouts/BaseLayout.astro`, `src/layouts/Prose.astro`, `src/layouts/LessonLayout.astro`, `src/components/seo/Meta.astro`, `src/components/seo/OpenGraph.astro`, `src/components/seo/JsonLd.astro`, `src/pages/index.astro`.
 - ✅ **Milestone 0-E** — `Definition`, `Callout`, `Summary` content components; token-driven, zero-JS, accessible, MDX-ready. Build: 0 errors, 0 warnings, 0 hints (14 files). Key files: `src/components/content/Definition.astro`, `src/components/content/Callout.astro`, `src/components/content/Summary.astro`.
+- ✅ **Milestone 0-F** — MDX integration (`@astrojs/mdx@5.0.6` for Astro 5.x); `[...slug].astro` lesson route via `getStaticPaths` + `lesson.slug`; sample lesson converted from `.md` to `.mdx` using `Definition`, `Callout`, `Summary`. Route generates `/economics/microeconomics-i/introduction/` with correct LearningResource JSON-LD, noindex (draft), all component output verified in built HTML. Build: 0 errors, 0 warnings, 0 hints (15 files). Key files: `astro.config.mjs`, `src/pages/[...slug].astro`, `src/content/lessons/economics/microeconomics-i/introduction.mdx`.
+  - **Note:** `@astrojs/mdx@7.0.0` (Astro 7 era) installed first and failed — downgraded to `5.0.6`. When upgrading Astro, upgrade MDX integration in lockstep.
+  - **Note:** `lesson.slug` (not `lesson.id`) used for URL params — `id` includes the `.mdx` extension in Astro 5 legacy collections; `slug` is clean.
 
 ## Next Milestone
 
-**Milestone 0-F — MDX integration + real lesson + lesson route + deploy.** Install `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/preact`; configure `remark-math` + `rehype-katex`; author one real Economics lesson as MDX (heading hierarchy, Definition, Callout, KaTeX math, Summary); wire `[...slug].astro` lesson page route; add `deploy.yml` CI; deploy to GitHub Pages. Full definition of done in `implementation-guide.md`.
+**Milestone 0-G — Real Economics lesson + KaTeX math + CI deploy.** Configure `remark-math` + `rehype-katex`; install KaTeX CSS; author one real supply-and-demand Economics lesson as MDX (heading hierarchy, Definition, Callout, KaTeX math, Summary, SourceRef); add `deploy.yml` CI to deploy to GitHub Pages. Full definition of done in `implementation-guide.md`.
 
 ## Locked Decisions
 
